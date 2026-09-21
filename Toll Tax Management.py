@@ -1,7 +1,7 @@
 import json
 import datetime
 
-datafile = "toll_records.json"
+datafile = "tollrecords.json"
 
 rates = {
     "car": 50,
@@ -14,7 +14,7 @@ records = []
 dailytravel = {}
 
 
-def loadrecords():
+def record():
     global records, dailytravel
     try:
         with open(datafile, "r") as f:
@@ -25,7 +25,7 @@ def loadrecords():
         dailytravel[(r["vn"], r["date"])] = True
 
 
-def saverecords():
+def save():
     with open(datafile, "w") as f:
         json.dump(records, f, indent=2)
 
@@ -36,7 +36,7 @@ def showrates():
         print(vehicle.title(), ": Rs.", rate)
 
 
-def traveledtoday(vn, today):
+def travel(vn, today):
     return (vn, today) in dailytravel
 
 
@@ -53,7 +53,7 @@ def toll():
     timestamp = now.strftime("%Y-%m-%d %H:%M:%S")
     baseamt = rates[vt]
 
-    if traveledtoday(vn, today):
+    if travel(vn, today):
         amt = baseamt / 2
         print("\nVehicle already traveled today — half toll applies.")
     else:
@@ -68,7 +68,7 @@ def toll():
     }
     records.append(record)
     dailytravel[(vn, today)] = True
-    saverecords()
+    save()
 
     print("\nToll collected: Rs.", amt, " from ", vn, " (", vt, ") at", timestamp)
 
@@ -107,7 +107,7 @@ def searchrecords():
 
 
 def main():
-    loadrecords()
+    record()
     while True:
         print("\n---- TOLL TAX MANAGEMENT ----")
         print("1. Show Toll Rates")
