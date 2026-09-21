@@ -7,7 +7,8 @@ rates = {
     "car": 50,
     "bus": 100,
     "truck": 150,
-    "bike": 20
+    "bike": 20,
+    "rickshaw": 35
 }
 
 records = []
